@@ -10,6 +10,10 @@ HF_TOKEN="${HF_TOKEN:?HF_TOKEN required}"
 OUTPUT_REPO="${OUTPUT_REPO:-essobi/dclm-crossover-megadoc-p1}"
 NUM_GPUS="${NUM_GPUS:-8}"
 
+export HUGGING_FACE_HUB_TOKEN="$HF_TOKEN"
+export HF_DATASETS_CACHE="/workspace/.cache/huggingface/datasets"
+export VLLM_ATTENTION_BACKEND="FLASH_ATTN"
+
 apt-get install -y tmux -qq 2>/dev/null || true
 pip install -q -r requirements.txt
 
