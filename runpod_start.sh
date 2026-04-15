@@ -17,6 +17,11 @@ export VLLM_ATTENTION_BACKEND="FLASH_ATTN"
 apt-get install -y tmux -qq 2>/dev/null || true
 pip install -q -r requirements.txt
 
+# Install runpodctl for self-termination
+if ! command -v runpodctl &>/dev/null; then
+    curl -fsSL https://cli.runpod.io/install.sh | sh 2>/dev/null || true
+fi
+
 python pipeline.py \
     --output-repo "$OUTPUT_REPO" \
     --num-shards "$NUM_SHARDS" \
@@ -24,3 +29,6 @@ python pipeline.py \
     --worker-id "w${SHARD_INDEX}" \
     --checkpoint ".checkpoint-w${SHARD_INDEX}.json" \
     --num-gpus "$NUM_GPUS"
+
+echo "Pipeline complete. Stopping pod ${RUNPOD_POD_ID}..."
+runpodctl pod stop "$RUNPOD_POD_ID"
