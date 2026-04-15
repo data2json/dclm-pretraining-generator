@@ -36,7 +36,7 @@ SOURCE_DATASET = "essobi/dclm-crossover-source"
 MAX_INPUT_CHARS = 20_000    # ~5k tokens @ ~4 chars/tok (leaves room for output in 8k ctx)
 MAX_MODEL_LEN   = 8192      # total context window
 MAX_OUTPUT_TOK  = 2048      # max generation tokens
-BATCH_SIZE      = 64        # docs per GPU per batch (64 * 8 GPUs = 512 total)
+BATCH_SIZE      = 256       # docs per GPU per batch (256 * 8 GPUs = 2048 total)
 SHARD_SIZE      = 1_000     # docs per pushed parquet shard
 NUM_GPUS        = 8         # number of GPUs to use
 
@@ -145,10 +145,17 @@ def gpu_worker_loop(gpu_id: int, model_name: str, task_queue: mp.Queue, result_q
         tensor_parallel_size=1,
         gpu_memory_utilization=0.90,
         max_model_len=MAX_MODEL_LEN,
+        max_num_seqs=2048,
+        max_num_batched_tokens=16384,
+        enable_prefix_caching=True,
+        speculative_config={
+            "method": "suffix",
+            "num_speculative_tokens": 32,
+        },
         trust_remote_code=True,
         dtype="half",
     )
-    sampling_params = SamplingParams(temperature=0.9, top_p=0.95, max_tokens=MAX_OUTPUT_TOK)
+    sampling_params = SamplingParams(temperature=0, max_tokens=MAX_OUTPUT_TOK)
 
     # Signal ready
     result_queue.put(("ready", gpu_id))
