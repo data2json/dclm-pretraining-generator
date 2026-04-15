@@ -245,7 +245,7 @@ class GPUWorkerPool:
             p = ctx.Process(
                 target=gpu_worker_loop,
                 args=(gpu_id, self.model_name, task_queue, self.result_queue),
-                daemon=True,
+                daemon=False,
             )
             p.start()
             self.workers.append(p)
