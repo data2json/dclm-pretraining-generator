@@ -12,7 +12,7 @@ cd /workspace/repo
 
 # 3. Handle HF Login
 if [ -n "$HF_TOKEN" ]; then
-    huggingface-cli login --token $HF_TOKEN --add-to-git-credential
+    hf auth login --token "$HF_TOKEN" --add-to-git-credential
 fi
 
 # 4. START THE WORKER (This keeps the pod alive)
