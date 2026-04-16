@@ -4,7 +4,7 @@ set -e # Exit immediately if a command fails
 echo "--- Starting Swarm Setup ---"
 
 # 1. Install dependencies
-pip install torch==2.8.0+cu128 vllm datasets huggingface_hub pyarrow tqdm https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
+pip install torch==2.8.0+cu128 hf_transfer vllm datasets huggingface_hub pyarrow tqdm https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
 
 # 2. Clone the repo (if not already there)
 git clone https://github.com/data2json/dclm-pretraining-generator.git /workspace/repo || true
