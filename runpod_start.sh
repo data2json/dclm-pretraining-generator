@@ -4,7 +4,7 @@ set -e # Exit immediately if a command fails
 echo "--- Starting Swarm Setup ---"
 
 # 1. Install dependencies
-pip install hf_transfer datasets huggingface_hub pyarrow tqdm vllm<0.19.0
+pip install hf_transfer datasets huggingface_hub pyarrow tqdm vllm<=0.18.0
 # 2. Clone the repo (if not already there)
 git clone https://github.com/data2json/dclm-pretraining-generator.git /workspace/repo || true
 cd /workspace/repo
