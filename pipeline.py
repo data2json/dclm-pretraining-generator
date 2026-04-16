@@ -38,7 +38,7 @@ MAX_MODEL_LEN   = 8192      # total context window
 MAX_OUTPUT_TOK  = 2048      # max generation tokens
 BATCH_SIZE      = 256       # docs per GPU per batch (256 * 8 GPUs = 2048 total)
 SHARD_SIZE      = 1_000     # docs per pushed parquet shard
-NUM_GPUS        = 8         # number of GPUs to use
+NUM_GPUS        = 1         # number of GPUs to use
 
 
 # ─────────────────────────────────────────────
@@ -506,7 +506,7 @@ def main():
         help=f"Model to use (default: {MODEL_NAME})",
     )
     parser.add_argument(
-        "--num-gpus", type=int, default=NUM_GPUS,
+        "--num-gpus", type=int, default=1,
         help=f"Number of GPUs to use (default: {NUM_GPUS})",
     )
     parser.add_argument(
