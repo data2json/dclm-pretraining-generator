@@ -153,7 +153,7 @@ def gpu_worker_loop(gpu_id: int, model_name: str, task_queue: mp.Queue, result_q
             "num_speculative_tokens": 32,
         },
         trust_remote_code=True,
-        dtype="half",
+        #dtype="half",
     )
     sampling_params = SamplingParams(temperature=0, max_tokens=MAX_OUTPUT_TOK)
 
