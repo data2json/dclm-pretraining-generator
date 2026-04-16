@@ -1,5 +1,7 @@
-vllm
+hf_transfer
 datasets
 huggingface_hub
 pyarrow
 tqdm
+"vllm<=0.18.0"
+arctic-inference==0.1.1

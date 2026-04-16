@@ -1,0 +1,32 @@
+name: megadoc-shard
+
+resources:
+  cloud: runpod
+  image_id: runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2404
+  accelerators: RTX4090:1
+
+  
+envs:
+  HF_TOKEN: null
+  # These will be overridden by the bash loop
+  SHARD_IDX: 0
+  TOTAL_SHARDS: 10
+
+workdir: . 
+
+
+setup: |
+  # Create a constraints file on the fly based on what is already installed
+  pip freeze | grep torch > constraints.txt
+  pip install -r requirements.txt -c constraints.txt
+  huggingface-cli login --token $HF_TOKEN
+
+
+run: |
+  python pipeline.py \
+    --output-repo "essobi/dclm-crossover-megadoc-p1" \
+    --num-shards $TOTAL_SHARDS \
+    --shard-index $SHARD_IDX \
+    --worker-id "w${SHARD_IDX}" \
+    --checkpoint ".checkpoint-w${SHARD_IDX}.json" \
+    --num-gpus 1
