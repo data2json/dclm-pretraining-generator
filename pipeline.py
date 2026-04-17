@@ -149,7 +149,8 @@ def gpu_worker_loop(gpu_id: int, model_name: str, task_queue: mp.Queue, result_q
         max_num_batched_tokens=16384,
         enable_prefix_caching=True,
         speculative_config={
-            "method": "suffix",
+            # Change "suffix" to one of the supported strings below
+            "method": "ngram", 
             "num_speculative_tokens": 32,
         },
         trust_remote_code=True,
